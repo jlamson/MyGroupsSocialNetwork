@@ -15,6 +15,7 @@
 			<input name="loginPassword" id="loginPassword" type="password" />
 		<br />
 		<input type="submit" value="Login" />
+
 	</form>
 	<p><a href="newProfile.php">New User?</a></p>
 </body>
