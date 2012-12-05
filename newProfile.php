@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h1>MyGroup - New User</h1>
-	<form action="createNewUser.php" method="post">
+	<form action="confirmNewUser.php" method="post">
 	<label for="uname">User Name*:</label>
 	<input type="text" name="uname" id="uname" />
 	<br>
@@ -30,7 +30,7 @@
 	<input type="text" name="passwordConfirm" id="passwordConfirm" />
 	<br>
 	<label for="gender">Gender:</label>
-	<select name="size">
+	<select name="gender">
 			<option value ="blank"></option>
     		<option value ="male">Male</option>
     		<option value ="female">Female</option>

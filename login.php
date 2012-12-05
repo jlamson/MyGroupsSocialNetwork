@@ -7,7 +7,7 @@
 <body>
 	<h1>myGroups</h1>
 	<h2>Login</h2>
-	<form action="home.php">
+	<form action="home.php" method="post">
 		<label for="loginEmail">Email:</label>
 			<input name="loginEmail" id="loginEmail" type="email" /> 
 		<br />
