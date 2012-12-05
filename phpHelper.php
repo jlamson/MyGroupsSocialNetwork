@@ -37,6 +37,14 @@ function validateLogin($email, $password){
 		echo "<script type=\"text/javascript\">
 			window.alert(\"Your email or password is incorrect!\")
 		</script>";
+	}else {
+		$row = $result->fetch_assoc();
+		$correct_password = $row['password'];
+		if($pwMd5 != $correct_password){
+			echo "<script type=\"text/javascript\">
+			window.alert(\"Your email or password is incorrect!\")
+		</script>";
+		}
 	}
 	echo $query;
 }
