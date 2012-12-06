@@ -1,7 +1,7 @@
 <?php
 	
 	$title = "Mon Amis";
-	$include = "";
+	$include = "home.html.php";
 	include "layout.php"
 
 ?>

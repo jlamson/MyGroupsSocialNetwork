@@ -9,7 +9,7 @@
 <body>
 
 	<div id="titleBar"> 
-		<h1><a href="index.php"> Mon Amis </a></h1>
+		<h1><a href="home.php"> Mon Amis </a></h1>
 	</div>
 	
 	<div id="sideBar">
