@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.4
+-- version 3.5.2.2
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Dec 04, 2012 at 10:29 PM
--- Server version: 5.0.96-0ubuntu3
--- PHP Version: 5.2.4-2ubuntu5.26
+-- Host: 127.0.0.1
+-- Generation Time: Dec 05, 2012 at 08:31 AM
+-- Server version: 5.5.27
+-- PHP Version: 5.4.7
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -38,11 +38,11 @@ CREATE TABLE IF NOT EXISTS `friend_list` (
 --
 
 CREATE TABLE IF NOT EXISTS `status_comments` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `comment` text,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `status_id` (`status_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -54,16 +54,26 @@ CREATE TABLE IF NOT EXISTS `status_comments` (
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(63) NOT NULL,
   `username` varchar(31) NOT NULL,
-  `first_name` varchar(31) default NULL,
-  `last_name` varchar(31) default NULL,
+  `first_name` varchar(31) DEFAULT NULL,
+  `last_name` varchar(31) DEFAULT NULL,
   `password` varchar(32) NOT NULL,
   `about` text,
-  `gender` char(1) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `gender` char(1) DEFAULT NULL,
+  `month` int(2) DEFAULT NULL,
+  `day` int(2) DEFAULT NULL,
+  `year` int(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `username`, `first_name`, `last_name`, `password`, `about`, `gender`, `month`, `day`, `year`) VALUES
+(1, 'jwaldow@mines.edu', 'jwaldow', 'Jon', 'Waldow', '78611cc22eaf65bfad1e553bcf906d9b', NULL, 'm', 3, 8, 1991);
 
 -- --------------------------------------------------------
 
@@ -72,10 +82,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 CREATE TABLE IF NOT EXISTS `user_statuses` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `status` text NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
