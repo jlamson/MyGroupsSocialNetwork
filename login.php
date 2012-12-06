@@ -1,22 +1,21 @@
-<DOCTYPE html>
-<html>
-<head>
-	<title>myGroups</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-	<h1>myGroups</h1>
-	<h2>Login</h2>
-	<form action="home.php" method="post">
-		<label for="loginEmail">Email:</label>
-			<input name="loginEmail" id="loginEmail" type="email" /> 
-		<br />
-		<label for="loginPassword">Pasword</label>
-			<input name="loginPassword" id="loginPassword" type="password" />
-		<br />
-		<input type="submit" value="Login" />
+<?php
+	include 'phpHelper.php';
+	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
+	
+	$title = "Login -- Mon Amis";
+	$include = "login.html.php";
+	
+	if(isset($_POST['loginEmail']) and isset($_POST['loginPassword'])) {
+		$db = initDB();
+		$email = $_POST['loginEmail'];
+		$password = $_POST['loginPassword'];
+		if (validateLogin($email, $password)) {
+			header('Location: home.php');
+		} else {
+			header('Location: login.php');
+		}
+		exit();
+	}
 
-	</form>
-	<p><a href="newProfile.php">New User?</a></p>
-</body>
-</html>
+	include "layout.php";
+?>

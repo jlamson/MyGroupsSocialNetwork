@@ -1,0 +1,44 @@
+@font-face {
+	font-family: frenchFont;
+	src:	url('fonts/Lionelofparis.ttf');
+}
+
+body {
+	background-color: #41326B;
+}
+
+div {
+	background-color: #FFFAC4;
+	border: 2px solid #B8B37B;
+	border-radius: 8px;
+	padding: 8px
+}
+
+div#titleBar {
+	width: 770px;
+	height: 40px;
+}
+
+div#sideBar {
+	width: 125px;
+	position: absolute;
+	top: 75px;
+	left: 10px;
+	padding-left: 0px;
+	font-family: frenchFont;
+	font-size: 1.25em;
+}
+
+div#pageContent {
+	width: 600px;
+	position: absolute;
+	left: 175px;
+	top: 75px;
+}
+
+h1 {
+	color: #8B7BB8;
+	vertical-align: top;
+	margin: 0px;
+	font-family: frenchFont;
+}
