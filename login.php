@@ -4,7 +4,6 @@
 	
 	$title = "Login -- Mon Amis";
 	$include = "login.html.php";
-	include "layout.php";
 	
 	if(isset($_POST['loginEmail']) and isset($_POST['loginPassword'])) {
 		$db = initDB();
@@ -17,4 +16,6 @@
 		}
 		exit();
 	}
+
+	include "layout.php";
 ?>

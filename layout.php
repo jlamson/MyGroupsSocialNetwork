@@ -13,12 +13,10 @@
 	</div>
 	
 	<div id="sideBar">
-		<ul>
-			<li><a href="home.php">Chez Moi</a></li>
-			<li><a href ="myGroups.php">Mon Amis</a></li>
-			<li><a href ="profilePage.php">Mon Profile</a></li>
-			<li><a href="logOut.php">Log Out</a></li>
-		</ul>		
+		<a href="home.php">Chez Moi</a><br />
+		<a href ="myGroups.php">Mon Amis</a><br />
+		<a href ="profilePage.php">Mon Profile</a><br />
+		<a href="logOut.php">Log Out</a><br />
 	</div>
 
 	<div id="pageContent">
