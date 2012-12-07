@@ -7,7 +7,8 @@
 
 	session_start();
 
-	
+	$error = "";
+
 	if(isset($_POST['loginEmail']) and isset($_POST['loginPassword'])) {
 		$db = initDB();
 		$email = $_POST['loginEmail'];
@@ -25,7 +26,7 @@
 			}
 			header('Location: home.php');
 		} else {
-			header('Location: login.php');
+			$error = "Incorrect login information";
 		}
 		exit();
 	}
