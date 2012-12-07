@@ -1,5 +1,28 @@
 <?php
 
+function getUserIdFromEmail($email){
+	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
+	$db = initDB();
+	
+	$query ="SELECT `id` FROM users WHERE `email` = ?;";
+	$stmt = $db->prepare($query);
+	$stmt = bind_param("s", $email);
+	$stmt = execute();
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	if($num_results == 0){
+		echo "<script type=\"text/javascript\">
+			window.alert(\"That user doesn't exist\")
+		</script>";
+		return false;	
+	}else {
+		$row = $result->fetch_assoc();
+		$user_id = $row['id'];
+		return $user_id;	
+	}
+		
+}
+
 function validateLogin($email, $password){
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
