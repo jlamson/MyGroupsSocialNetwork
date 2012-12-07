@@ -4,7 +4,8 @@
 	
 	$title = "Login -- Mon Amis";
 	$include = "login.html.php";
-	
+	$error = "";
+
 	if(isset($_POST['loginEmail']) and isset($_POST['loginPassword'])) {
 		$db = initDB();
 		$email = $_POST['loginEmail'];
@@ -12,7 +13,7 @@
 		if (validateLogin($email, $password)) {
 			header('Location: home.php');
 		} else {
-			header('Location: login.php');
+			$error = "Incorrect login information";
 		}
 		exit();
 	}

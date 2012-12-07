@@ -1,4 +1,7 @@
-<form action="home.php" method="post">
+<?php if ($error != "") { ?>
+	<p>Error: <?= $error ?></p>
+<?php } ?>
+<form action="login.php" method="post">
 	<label for="loginEmail">Email:</label>
 		<input name="loginEmail" id="loginEmail" type="email" /> 
 	<br />
