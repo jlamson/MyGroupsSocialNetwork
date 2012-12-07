@@ -39,9 +39,9 @@ function validateLogin($email, $password){
 		$row = $result->fetch_assoc();
 		$correct_password = $row['password'];
 			return false;
-		}
-		
 	}
+		
+	
 
 	//TODO: set session and stuff
 	return true;
