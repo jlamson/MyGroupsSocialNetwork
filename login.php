@@ -1,4 +1,5 @@
 <?php
+	include 'verifyLogin.php';
 	include 'phpHelper.php';
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	
@@ -17,12 +18,9 @@
 
 			$user_id = getUserIdFromEmail($email);
 			if($user_id != false){
-				$_SESSION['userEmail']=$email;
 				$_SESSION['userId'] = $user_id;
 			} else {
-				echo "<script type=\"text/javascript\">
-					window.alert(\"That user doesn't exist\")
-				</script>";
+				$error = "An error occured while logging you in";
 			}
 			header('Location: home.php');
 		} else {
