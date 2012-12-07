@@ -6,14 +6,11 @@ function getUserIdFromEmail($email){
 	
 	$query ="SELECT `id` FROM users WHERE `email` = ?;";
 	$stmt = $db->prepare($query);
-	$stmt = bind_param("s", $email);
-	$stmt = execute();
+	$stmt->bind_param("s", $email);
+	$stmt->execute();
 	$result = $stmt->get_result();	
 	$num_results = $result->num_rows;
 	if($num_results == 0){
-		echo "<script type=\"text/javascript\">
-			window.alert(\"That user doesn't exist\")
-		</script>";
 		return false;	
 	}else {
 		$row = $result->fetch_assoc();
@@ -36,22 +33,15 @@ function validateLogin($email, $password){
 	$result = $stmt->get_result();
 
 	$num_results = $result->num_rows;
-	echo $num_results;
 	if($num_results== 0){
-		echo "<script type=\"text/javascript\">
-			window.alert(\"That user doesn't exist\")
-		</script>";
 		return false;
 	} else {
 		$row = $result->fetch_assoc();
 		$correct_password = $row['password'];
-		if($pwHash != $correct_password){
-			echo "<script type=\"text/javascript\">
-			window.alert(\"Your email or password is incorrect!\")
-		</script>";
-		}
-		return false;
+			return false;
 	}
+		
+	
 
 	//TODO: set session and stuff
 	return true;

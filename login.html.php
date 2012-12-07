@@ -1,4 +1,5 @@
 <?php if ($error != "") { ?>
+	<p>There is an error</p>
 	<p>Error: <?= $error ?></p>
 <?php } ?>
 <form action="login.php" method="post">
