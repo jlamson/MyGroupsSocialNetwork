@@ -23,6 +23,12 @@
 		}
 	}
 
+	if (isset($_REQUEST['comment'])) {
+		if (addComment($_REQUEST['post_id'], $_REQUEST['status_comment']) > 0) {
+			$error = "There was an error in posting your comment";
+		}
+	}
+
 	$ids = getFriendIds();
 	$posts = getFriendsStatuses($ids);
 

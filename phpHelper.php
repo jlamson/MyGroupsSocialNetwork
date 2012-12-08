@@ -129,7 +129,7 @@ function getFriendsStatuses($ids) {
   	foreach ($ids as $id) {
   		$query .= " OR user_statuses.user_id=" . $id;
   	}
-  	$query .= ");";
+  	$query .= ") ORDER BY user_statuses.id DESC LIMIT 0, 20;";
 	$stmt = $db->prepare($query);
 	$stmt->execute();
 	
@@ -139,12 +139,52 @@ function getFriendsStatuses($ids) {
 
 	if($num_results != 0){
 		for($i=0; $i<$num_results; $i++){
-			$statuses[] = $result->fetch_assoc();
+			$statuses[$i] = $result->fetch_assoc();
+			$statuses[$i]['comments'] = getComments($statuses[$i]['id']);
 		}
 		return $statuses;
 	} else {
 		return false;
 	}
+
 }
+
+function addComment($post_id, $comment) {
+	$db = initDB();
+
+	$query = "INSERT INTO status_comments (status_id, user_id, comment) VALUES 
+		(?, ?, ?)";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("iis", $post_id, $_SESSION['userId'], $comment);
+	$stmt->execute();
+	
+	return $db->affected_rows;
+}
+
+function getComments($status_id) {
+	$db = initDB();
+
+	$query = "SELECT users.username, status_comments.comment 
+		FROM status_comments INNER JOIN users ON
+			status_comments.user_id=users.id WHERE status_comments.status_id=? 
+		ORDER BY status_comments.id DESC";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("i", $status_id);
+	$stmt->execute();
+
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$comments = array();
+
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$comments[$i] = $result->fetch_assoc();
+		}
+		return $comments;
+	} else {
+		return false;
+	}
+	
+} 
 
 ?>
