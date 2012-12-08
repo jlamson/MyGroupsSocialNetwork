@@ -141,5 +141,24 @@ function getFriendIds(){
 		
 }
 
+function addFriend($friendId){
+	$db = initDB();
+	$query="INSERT INTO `friend_list` (`user_id`, `friend_id`) VALUES (?,?)";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("ii", $_SESSION['userId'], $friendId);
+	echo "You added a friend".$friendId;
+	return($stmt->execute());
+
+}
+
+function deleteFriend($friendId){
+	$db = initDB();
+	$query="DELETE FROM `friend_list` WHERE (`user_id` = ? AND `friend_id` = ?);";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("ii", $_SESSION['userId'], $friendId);
+	return($stmt->execute());
+
+}
+
 
 ?>
