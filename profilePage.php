@@ -1,4 +1,6 @@
 <?php 
 	include 'phpHelper.php';	
-	setLayout();
+	$title = "My Profile";
+	$include = "profilePage.html.php";
+	include 'layout.php';
 ?>

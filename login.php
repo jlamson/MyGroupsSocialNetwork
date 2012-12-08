@@ -14,21 +14,18 @@
 		$email = $_POST['loginEmail'];
 		$password = $_POST['loginPassword'];
 		if (validateLogin($email, $password)) {
-
+			
 			$user_id = getUserIdFromEmail($email);
 			if($user_id != false){
-				$_SESSION['userEmail']=$email;
-				$_SESSION['userId'] = $user_id;
+				$_SESSION['userId'] = $user_id;	
+				header('Location: home.php');
+				exit();
 			} else {
-				echo "<script type=\"text/javascript\">
-					window.alert(\"That user doesn't exist\")
-				</script>";
+				$error = "An error occured while logging you in";
 			}
-			header('Location: home.php');
 		} else {
 			$error = "Incorrect login information";
 		}
-		exit();
 	}
 
 	include "layout.php";
