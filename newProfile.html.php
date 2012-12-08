@@ -7,13 +7,13 @@
 	<label for="lname">Last Name:</label>
 		<input type="text" name="lname" id="lname" /> <br />
 	<label for="email">Email*:</label>
-		<input type="text" name="email" id="email" /> <br />
+		<input type="email" name="email" id="email" /> <br />
 	<label for="emailConfirm">Re-enter email*:</label>
-		<input type="text" name="emailConfirm" id="emailConfirm" /> <br />
+		<input type="email" name="emailConfirm" id="emailConfirm" /> <br />
 	<label for="password">Password*:</label>
-		<input type="text" name="password" id="password" /> <br />
+		<input type="password" name="password" id="password" /> <br />
 	<label for="passwordConfim">Re-enter password*:</label>
-		<input type="text" name="passwordConfirm" id="passwordConfirm" /> <br />
+		<input type="password" name="passwordConfirm" id="passwordConfirm" /> <br />
 	<label for="gender">Gender:</label>
 		<select name="gender">
 			<option value ="b"></option>
