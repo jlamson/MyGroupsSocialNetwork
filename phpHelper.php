@@ -95,4 +95,27 @@ function initDB() {
 	}
 }
 
+/* function getFriends($userId){
+	$db = initDB();
+	$query ="SELECT `friend_id` FROM friend_list WHERE `user_id` = ?;";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("s", $userId);
+	$stmt->execute();
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$all_friends= array();
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$row = $result->fetch_assoc();
+			$friendId = $row['id'];
+			$all_friends[$i] = $friend_id;
+		}
+		return $all_friends;
+	} else {
+		return false;
+	}
+	
+}*/
+
+
 ?>
