@@ -1,7 +1,7 @@
 <h1>Home</h1>
-<form action="home.php" method="post">
-	<input class="status" type="text" />
-	<input class="submit_status" type="submit" value="Update Status" />
+<form action="" method="post">
+	<input class="status" name="status" type="text" />
+	<input class="submit_status" name="newStatus" type="submit" value="Update Status" />
 </form>
 <ul>
 	<li>post foo blah</li>
