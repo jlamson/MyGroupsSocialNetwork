@@ -7,6 +7,14 @@ body {
 	background-color: #41326B;
 }
 
+input.status {
+	width: 80%;
+}
+
+input.status_submit {
+	width: 20%;
+}
+
 div {
 	background-color: #FFFAC4;
 	border: 2px solid #B8B37B;
