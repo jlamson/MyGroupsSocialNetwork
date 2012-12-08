@@ -30,7 +30,11 @@
 	}
 
 	$ids = getFriendIds();
-	$posts = getFriendsStatuses($ids);
+	if(getFriendsStatuses($ids)!=false){
+		$posts = getFriendsStatuses($ids);
+	} else {
+		$posts = array();
+	}
 
 	include "layout.php";
 ?>
