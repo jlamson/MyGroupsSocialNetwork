@@ -146,7 +146,6 @@ function addFriend($friendId){
 	$query="INSERT INTO `friend_list` (`user_id`, `friend_id`) VALUES (?,?)";
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("ii", $_SESSION['userId'], $friendId);
-	echo "You added a friend".$friendId;
 	return($stmt->execute());
 
 }
