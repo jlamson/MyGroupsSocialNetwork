@@ -14,7 +14,7 @@
 	
 	<div id="sideBar">
 		<a href="home.php">Chez Moi</a><br />
-		<a href="profilePage.php">Mon Profile</a><br />
+		<a href="myProfile.php">Mon Profile</a><br />
 		<a href="friends.php">My Friends</a><br />
 		<a href="members.php">Members</a><br />
 		<a href="logOut.php">Log Out</a><br />

@@ -25,15 +25,20 @@ span.status_header {
 	font-size: 1.25em;
 }
 
-span.status_content, span.comment_content {
+span.status_content, span.comment_content, span.userView_content{
 	word-wrap: break-word;
 }
 
-p.comment_block {
+p.comment_block, p.userView_block {
 	margin-left: 20px;
 }
 
-span.comment_header {
+p.userView_block {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+span.comment_header, span.userView_title {
 	font-family: frenchFont;
 	font-size: 1.1em;
 }

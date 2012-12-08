@@ -2,7 +2,7 @@
 	include 'verifyLogin.php';
 	include 'phpHelper.php';	
 	$title = "My Profile";
-	$include = "profilePage.html.php";
+	$include = "myProfile.html.php";
 	$error = "";
 
 	if (isset($_REQUEST['useredit'])) {
