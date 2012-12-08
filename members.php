@@ -8,5 +8,6 @@
 	$currentId = $_SESSION['userId'];
 	$all_users = getAllUsers();
 
+
 	include "layout.php";
 ?>
