@@ -23,5 +23,8 @@
 		}
 	}
 
+	$ids = getFriendIds();
+	$posts = getFriendsStatuses($ids);
+
 	include "layout.php";
 ?>

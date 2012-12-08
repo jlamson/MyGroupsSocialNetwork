@@ -1,10 +1,11 @@
 <!-- logOut.php -->
 <?php
 	$title = "Mon Amis - Log Out";
+	$include = "logOut.html.php";
 
 	session_start();
 	$_SESSION = array(); 
 	session_destroy();
 
-	header("Location: login.php");
+	include "layout.php";
 ?>
