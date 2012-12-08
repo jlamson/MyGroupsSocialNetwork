@@ -1,11 +1,11 @@
 <!-- friends.php -->
 <?php 
+	include "verifyLogin.php";
 	$title = "Friends";
 	$include = "friends.html.php";
 	include "phpHelper.php";
 
-	session_start();
-	$currentId = $_SESSION['user_id'];
+	$currentId = $_SESSION['userId'];
 	
 
 	include "layout.php";

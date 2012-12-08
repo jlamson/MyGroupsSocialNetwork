@@ -95,29 +95,6 @@ function initDB() {
 }
 
 
-/* function getFriends($userId){
-	$db = initDB();
-	$query ="SELECT `friend_id` FROM friend_list WHERE `user_id` = ?;";
-	$stmt = $db->prepare($query);
-	$stmt->bind_param("s", $userId);
-	$stmt->execute();
-	$result = $stmt->get_result();	
-	$num_results = $result->num_rows;
-	$all_friends= array();
-	if($num_results != 0){
-		for($i=0; $i<$num_results; $i++){
-			$row = $result->fetch_assoc();
-			$friendId = $row['id'];
-			$all_friends[$i] = $friend_id;
-		}
-		return $all_friends;
-	} else {
-		return false;
-	}
-	
-}*/
-
-
 function getFriendIds(){
 	$db = initDB();
 	$query ="SELECT `friend_id` FROM `friend_list` WHERE `user_id`=?;";
@@ -141,6 +118,75 @@ function getFriendIds(){
 		
 }
 
+function getFriendsStatuses($ids) {
+	$ids = getFriendIds();
+
+	$db = initDB();
+
+	$query = "SELECT users.username, users.first_name, users.last_name, user_statuses.id, user_statuses.user_id, user_statuses.status 
+		FROM user_statuses INNER JOIN users ON users.id=user_statuses.user_id
+  		WHERE (FALSE";
+  	foreach ($ids as $id) {
+  		$query .= " OR user_statuses.user_id=" . $id;
+  	}
+  	$query .= ") ORDER BY user_statuses.id DESC LIMIT 0, 20;";
+	$stmt = $db->prepare($query);
+	$stmt->execute();
+	
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$statuses = array();
+
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$statuses[$i] = $result->fetch_assoc();
+			$statuses[$i]['comments'] = getComments($statuses[$i]['id']);
+		}
+		return $statuses;
+	} else {
+		return false;
+	}
+
+}
+
+function addComment($post_id, $comment) {
+	$db = initDB();
+
+	$query = "INSERT INTO status_comments (status_id, user_id, comment) VALUES 
+		(?, ?, ?)";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("iis", $post_id, $_SESSION['userId'], $comment);
+	$stmt->execute();
+	
+	return $db->affected_rows;
+}
+
+function getComments($status_id) {
+	$db = initDB();
+
+	$query = "SELECT users.username, status_comments.comment 
+		FROM status_comments INNER JOIN users ON
+			status_comments.user_id=users.id WHERE status_comments.status_id=? 
+		ORDER BY status_comments.id DESC";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("i", $status_id);
+	$stmt->execute();
+
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$comments = array();
+
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$comments[$i] = $result->fetch_assoc();
+		}
+		return $comments;
+	} else {
+		return false;
+	}
+	
+}
+
 function addFriend($friendId){
 	$db = initDB();
 	$query="INSERT INTO `friend_list` (`user_id`, `friend_id`) VALUES (?,?)";
@@ -158,6 +204,5 @@ function deleteFriend($friendId){
 	return($stmt->execute());
 
 }
-
 
 ?>

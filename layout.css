@@ -7,13 +7,38 @@ body {
 	background-color: #41326B;
 }
 
-input.status {
-	width: 80%;
+input.status, input.status_comment {
+	width: 75%;
 }
 
-input.status_submit {
+input.submit_status, input.submit_status_comment {
 	width: 20%;
+	float: right;
 }
+
+.extra_margin {
+	margin-bottom: 30px;
+}
+
+span.status_header {
+	font-family: frenchFont;
+	font-size: 1.25em;
+}
+
+span.status_content, span.comment_content {
+	word-wrap: break-word;
+}
+
+p.comment_block {
+	margin-left: 20px;
+}
+
+span.comment_header {
+	font-family: frenchFont;
+	font-size: 1.1em;
+}
+
+
 
 div {
 	background-color: #FFFAC4;
