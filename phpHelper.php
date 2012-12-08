@@ -94,7 +94,7 @@ function initDB() {
 	}
 }
 
-function getFriendIds(){
+function getFriendIds() {
 	$db = initDB();
 	$query ="SELECT `friend_id` FROM `friend_list` WHERE `user_id`=?;";
 	$stmt = $db->prepare($query);
@@ -115,6 +115,36 @@ function getFriendIds(){
 		return false;
 	}
 		
+}
+
+function getFriendsStatuses($ids) {
+	$ids = getFriendIds();
+
+	$db = initDB();
+
+	$query = "SELECT users.username, users.first_name, users.last_name, user_statuses.id, user_statuses.user_id, user_statuses.status 
+		FROM user_statuses INNER JOIN users ON users.id=user_statuses.user_id
+  		WHERE (FALSE";
+  	foreach ($ids as $id) {
+  		$query .= " OR user_statuses.user_id=" . $id;
+  	}
+  	$query .= ");";
+	$stmt = $db->prepare($query);
+	$stmt->execute();
+	
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$statuses = array();
+
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$statuses[] = $result->fetch_assoc();
+		}
+		var_dump($statuses);
+		return $statuses;
+	} else {
+		return false;
+	}
 }
 
 ?>
