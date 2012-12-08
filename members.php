@@ -5,7 +5,7 @@
 	include "phpHelper.php";
 	include "verifyLogin.php";
 	$currentId = $_SESSION['userId'];
-	$all_users = getAllUsers();
+	
 
 	if(isset($_REQUEST['addFriend'])){
 		$friendId = $_REQUEST['friendId'];
@@ -17,9 +17,24 @@
 		deleteFriend($friendId);
 	}
 
-	foreach ($all_users as $cur_id) {
-		if($cur_id != $_SESSION['userId']){
-			$all_info[] = getUserInfo($cur_id);
+	if(isset($_REQUEST['search'])){
+		$term = $_REQUEST['search_term'];
+		$all_users = getUsersBySearch($term);
+		if($all_users!= false){
+			foreach ($all_users as $cur_id) {
+				if($cur_id != $_SESSION['userId']){
+					$all_info[] = getUserInfo($cur_id);
+				}
+			}
+		} else {
+			$all_info = array();
+		}
+	}else{
+		$all_users = getAllUsers();
+		foreach ($all_users as $cur_id) {
+			if($cur_id != $_SESSION['userId']){
+				$all_info[] = getUserInfo($cur_id);
+			}
 		}
 	}
 
