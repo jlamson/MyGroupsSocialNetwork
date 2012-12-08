@@ -59,7 +59,7 @@ function getAllUsers(){
 		
 }
 
-function isUniqueUser($un, $email, $isNewUser) {
+function isUniqueUser($un, $email) {
 	$db = initDB();
 	$error = "";
 	
@@ -83,7 +83,7 @@ function isUniqueUser($un, $email, $isNewUser) {
 		$error .= "A user with this email exists.";
 	}
 
-	return true;
+	return $error;
 
 }
 

@@ -1,4 +1,5 @@
 <h1>My Profile</h1>
+<?php if($error != "") echo "<h2 class=\"alert\">$error</h2>"; ?>
 <form action="" method="post">
 	Username: <?= $userInfo['username']?> <br />
 	Email: <?= $userInfo['email']?> <br />

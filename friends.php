@@ -13,7 +13,8 @@
 		deleteFriend($friendId);
 	}
 
-	if(isset($_REQUEST['search'])){
+
+	if (isset($_REQUEST['search'])) {
 		$term = $_REQUEST['search_term'];
 		$all_users = getFriendsBySearch($term);
 		if($all_users!= false){
@@ -25,8 +26,8 @@
 		} else {
 			$all_info = array();
 		}
-	}else{
-	$all_friends = getFriendIds();
+	} else {
+		$all_friends = getFriendIds();
 		if($all_friends != false){
 			foreach ($all_friends as $cur_id) {
 				if($cur_id != $_SESSION['userId']){

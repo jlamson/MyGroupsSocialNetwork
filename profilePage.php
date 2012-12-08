@@ -25,7 +25,7 @@
 
 	if (isset($_REQUEST['passedit'])) {
 		if ($_REQUEST['newPassword'] == $_REQUEST['confPassword']) {
-			if (md5($_REQUEST['oldPassword']) != $userInfo['password']) {
+			if (md5($_REQUEST['oldPassword']) == $userInfo['password']) {
 				if (updateUserPassword(md5($_REQUEST['newPassword'])) == 0) {
 					$error = "An error occured while updating your password. Please try again. ";
 				} 
