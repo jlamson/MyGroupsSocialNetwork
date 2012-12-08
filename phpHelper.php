@@ -38,13 +38,9 @@ function validateLogin($email, $password){
 	} else {
 		$row = $result->fetch_assoc();
 		$correct_password = $row['password'];
-			return false;
+			return true;
 	}
-		
-	
 
-	//TODO: set session and stuff
-	return true;
 }
 
 function initDB() {
