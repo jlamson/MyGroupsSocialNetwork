@@ -21,7 +21,6 @@ function getUserIdFromEmail($email){
 }
 
 function getUserInfo($userId){
-	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
 	
 	$query ="SELECT * FROM users WHERE `id` = ?;";
@@ -60,6 +59,74 @@ function getAllUsers(){
 		
 }
 
+function isUniqueUser($un, $email, $isNewUser) {
+	$db = initDB();
+	$error = "";
+	
+	$query ="SELECT * FROM users WHERE `username` = ?;";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("s", $un);
+	$stmt->execute();
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	if($num_results != 0 ){
+		$error .= "A user with this username exists.";
+	} 
+
+	$query ="SELECT * FROM users WHERE `email` = ?;";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("s", $email);
+	$stmt->execute();
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	if($num_results != 0 ){
+		$error .= "A user with this email exists.";
+	}
+
+	return true;
+
+}
+
+function updateLoggedInUser($user) {
+	
+	$db = initDB();
+
+	$query = "UPDATE users SET
+		first_name = ?,
+		last_name = ?,
+		about = ?,
+		gender = ?,
+		month = ?,
+		day = ?,
+		year = ?	
+		WHERE id = ?";
+	
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("ssssiiii", $user['fname'], $user['lname'], $user['about'], 
+		$user['gender'], $user['month'], $user['day'], $user['year'],
+		$_SESSION['userId']);
+	$stmt->execute();
+	
+	return $db->affected_rows;
+
+}
+
+function updateUserPassword($passHash) {
+	
+	$db = initDB();
+
+	$query = "UPDATE users SET
+		password = ?
+		WHERE id = ?";
+	
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("ss",	$passHash, $_SESSION['userId']);
+	$stmt->execute();
+	
+	return $db->affected_rows;
+
+}
+
 function validateLogin($email, $password){
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
@@ -73,12 +140,12 @@ function validateLogin($email, $password){
 	$result = $stmt->get_result();
 
 	$num_results = $result->num_rows;
-	if($num_results== 0){
+	if($num_results == 0){
 		return false;
 	} else {
 		$row = $result->fetch_assoc();
 		$correct_password = $row['password'];
-			return true;
+		return $correct_password == $pwHash;
 	}
 
 }
