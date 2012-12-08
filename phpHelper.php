@@ -140,7 +140,6 @@ function getFriendsStatuses($ids) {
 		for($i=0; $i<$num_results; $i++){
 			$statuses[] = $result->fetch_assoc();
 		}
-		var_dump($statuses);
 		return $statuses;
 	} else {
 		return false;
