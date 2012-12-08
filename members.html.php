@@ -14,7 +14,7 @@
 		echo "<p>".$about."</p>";
 		echo "<h2>Birthday</h2>";
 		echo "<p>".$month."/".$day."/".$year."</p>";
-		echo "<button type=\"button\">Add as friend</button>";
+		echo "<button type=\"button\" onclick=\"addFriend()\">Add as friend</button>";
 		echo "<hr>";
 
 	} 

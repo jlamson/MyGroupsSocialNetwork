@@ -94,7 +94,8 @@ function initDB() {
 	}
 }
 
-function getFriendIds() {
+
+function getFriendIds(){
 	$db = initDB();
 	$query ="SELECT `friend_id` FROM `friend_list` WHERE `user_id`=?;";
 	$stmt = $db->prepare($query);
