@@ -295,4 +295,34 @@ function getUsersBySearch($term){
 
 }
 
+function getFriendsBySearch($term){
+	$db = initDB();
+	$ids = getFriendIds();
+	$query ="SELECT `id` FROM `users` WHERE (`first_name`LIKE ? OR `last_name` LIKE ? OR `username` LIKE ? OR `email` LIKE ?) AND (FALSE ";
+
+  	foreach ($ids as $id) {
+  		$query .= " OR id=" . $id;
+  	}
+  	$query .= ");";
+
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("ssss", $term, $term, $term, $term);
+	$stmt->execute();
+
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$ids = array();
+
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$row = $result->fetch_assoc();
+			$ids[] = $row['id'];
+		}
+		return $ids;
+	} else {
+		return false;
+	}
+
+}
+
 ?>
