@@ -7,6 +7,7 @@
 	<span class="userView_title">Other Stuff</span>
 	<span class="userView_content">
 		<?= $user['first_name'] ?> <?= $user['last_name'] ?> <br />
+		&nbsp;&nbsp;&nbsp;&nbsp;
 		<?= $user['gender'] ?>, <?php echo $user["month"]."/".$user["day"]."/".$user["year"] ?><br />
 	</span>
 </p>
