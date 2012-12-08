@@ -5,6 +5,8 @@
 	include "phpHelper.php";
 
 	session_start();
+	$currentId = $_SESSION['user_id'];
+	
 
 	include "layout.php";
 ?>

@@ -39,7 +39,6 @@ function getUserInfo($userId){
 }
 
 function getAllUsers(){
-	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
 	
 	$query ="SELECT `id` FROM users WHERE 1;";
@@ -95,6 +94,7 @@ function initDB() {
 	}
 }
 
+
 /* function getFriends($userId){
 	$db = initDB();
 	$query ="SELECT `friend_id` FROM friend_list WHERE `user_id` = ?;";
@@ -116,6 +116,30 @@ function initDB() {
 	}
 	
 }*/
+
+
+function getFriendIds(){
+	$db = initDB();
+	$query ="SELECT `friend_id` FROM `friend_list` WHERE `user_id`=?;";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("i", $_SESSION['userId']);
+	$stmt->execute();
+	
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$ids = array();
+
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$row = $result->fetch_assoc();
+			$ids[] = $row['friend_id'];
+		}
+		return $ids;
+	} else {
+		return false;
+	}
+		
+}
 
 
 ?>
