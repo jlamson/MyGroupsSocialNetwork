@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>logOut</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="style.css" type="text/css">
-</head>
-<body>
-<h1>You Have Successfully Logged Out</h1>
-<p><a href="index.php">Log In</a></p>
-</body>
-</html>
+<!-- logOut.php -->
+<?php
+	$title = "Mon Amis - Log Out";
+	$include = "logOut.html.php";
+
+	session_start();
+	$_SESSION = array(); 
+	session_destroy();
+
+	include "layout.php";
+?>
