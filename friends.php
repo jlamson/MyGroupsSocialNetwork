@@ -13,7 +13,7 @@
 		deleteFriend($friendId);
 	}
 
-	if($all_friends == false){
+	if ($all_friends != false) {
 		foreach ($all_friends as $cur_id) {
 			if($cur_id != $_SESSION['userId']){
 				$all_info[] = getUserInfo($cur_id);

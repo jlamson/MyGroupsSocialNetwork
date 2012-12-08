@@ -192,7 +192,7 @@ function getFriendsStatuses($ids) {
 
 	$query = "SELECT users.username, users.first_name, users.last_name, user_statuses.id, user_statuses.user_id, user_statuses.status 
 		FROM user_statuses INNER JOIN users ON users.id=user_statuses.user_id
-  		WHERE (FALSE";
+  		WHERE (FALSE OR user_statuses.user_id=".$_SESSION['userId'];
   	foreach ($ids as $id) {
   		$query .= " OR user_statuses.user_id=" . $id;
   	}
