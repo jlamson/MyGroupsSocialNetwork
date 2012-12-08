@@ -6,20 +6,22 @@
 	include "phpHelper.php";
 
 	$currentId = $_SESSION['userId'];
-	$all_friends = getFriendIds();
+	
 	
 	if(isset($_REQUEST['deleteFriend'])){
 		$friendId= $_REQUEST['friendId'];
 		deleteFriend($friendId);
 	}
 
-	if($all_friends == false){
+	$all_friends = getFriendIds();
+	if($all_friends != false){
 		foreach ($all_friends as $cur_id) {
 			if($cur_id != $_SESSION['userId']){
 				$all_info[] = getUserInfo($cur_id);
 			}
 		}
+	}else{
+		$all_info = array();
 	}
-
 	include "layout.php";
 ?>
