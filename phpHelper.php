@@ -30,7 +30,6 @@ function getUserInfo($userId){
 	$stmt->execute();
 	$result = $stmt->get_result();	
 	$num_results = $result->num_rows;
-	$user_info = array();
 	if($num_results == 0){
 		return false;
 	} else {
@@ -48,11 +47,11 @@ function getAllUsers(){
 	$result = $stmt->get_result();	
 	$num_results = $result->num_rows;
 	$all_users = array();
-	if($num_results == 0){
+	if($num_results != 0){
 		for($i=0; $i<$num_results; $i++){
 			$row = $result->fetch_assoc();
 			$user_id = $row['id'];
-			$all_users["$i"] = $user_id;
+			$all_users[$i] = $user_id;
 		}
 		return $all_users;
 	} else {
