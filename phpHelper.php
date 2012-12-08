@@ -40,10 +40,7 @@ function validateLogin($email, $password){
 		$correct_password = $row['password'];
 			return false;
 	}
-		
 	
-
-	//TODO: set session and stuff
 	return true;
 }
 

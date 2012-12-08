@@ -1,5 +1,4 @@
 <?php
-	include 'verifyLogin.php';
 	include 'phpHelper.php';
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	
@@ -15,18 +14,18 @@
 		$email = $_POST['loginEmail'];
 		$password = $_POST['loginPassword'];
 		if (validateLogin($email, $password)) {
-
+			
 			$user_id = getUserIdFromEmail($email);
 			if($user_id != false){
-				$_SESSION['userId'] = $user_id;
+				$_SESSION['userId'] = $user_id;	
+				header('Location: home.php');
+				exit();
 			} else {
 				$error = "An error occured while logging you in";
 			}
-			header('Location: home.php');
 		} else {
 			$error = "Incorrect login information";
 		}
-		exit();
 	}
 
 	include "layout.php";
