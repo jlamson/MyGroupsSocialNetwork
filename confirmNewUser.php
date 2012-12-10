@@ -3,6 +3,7 @@
 	include 'phpHelper.php';
 	$db = initDB();
 	$error = "";
+	$userConfirm = false;
 
 	if (!isset($_REQUEST['confirmUser'])) {
 		$userName = $_POST['uname'];
@@ -30,17 +31,18 @@
 		}
 
 		if($error == "") { 
+			$isActive = 0;
 			$insert = "INSERT INTO users (email, username, first_name, last_name, password, gender, month, day, year, isActive) 
-				VALUES (?,?,?,?,?,?,?,?,?)";
+				VALUES (?,?,?,?,?,?,?,?,?,?)";
 			
 			$stmt = $db->prepare($insert);
-			$stmt->bind_param("ssssssiiii", $email, $userName, $firstName, $lastName, $pwHash, $gender, $month, $day, $year, 0);	
+			$stmt->bind_param("ssssssiiii", $email, $userName, $firstName, $lastName, $pwHash, $gender, $month, $day, $year, $isActive);	
 			$stmt->execute();
 				
 		    if($stmt->affected_rows == 1) {
 				$title = "Confirmation Email Sent";
 				$include = "confirmNewUser.html.php";
-		    	include 'layout.php';
+		    	//include 'layout.php';
 		    
 		    	sendConfirmationEmail($email);
 		    } else {
@@ -52,9 +54,7 @@
 		    include 'layout.php';
 		}
 
-	} else if () {
-		//TODO activate user
-
+	} else if (isset($_REQUEST['confirmUser'])) {
 		$db=initDB();
 
 		$query = "UPDATE users SET
@@ -71,6 +71,7 @@
 
 		$title = "Welcome!";
 		$include = "confirmNewUser.html.php";
+		$userConfirm = true;
     	include 'layout.php';
 	} 
 ?>

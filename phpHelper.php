@@ -4,7 +4,7 @@ function getUserIdFromEmail($email){
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
 	
-	$query ="SELECT `id` FROM users WHERE `email` = ?;";
+	$query ="SELECT `id` FROM users WHERE `email` = ? AND isActive=1;";
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("s", $email);
 	$stmt->execute();
@@ -23,7 +23,7 @@ function getUserIdFromUserName($uname){
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
 	
-	$query ="SELECT `id` FROM users WHERE `username` = ?;";
+	$query ="SELECT `id` FROM users WHERE `username` = ? AND isActive=1;";
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("s", $uname);
 	$stmt->execute();
@@ -42,7 +42,7 @@ function getUserIdFromUserName($uname){
 function getUserInfo($userId){
 	$db = initDB();
 	
-	$query ="SELECT * FROM users WHERE `id` = ?;";
+	$query ="SELECT * FROM users WHERE `id` = ? AND isActive=1;";
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("s", $userId);
 	$stmt->execute();
@@ -59,7 +59,7 @@ function getUserInfo($userId){
 function getAllUsers(){
 	$db = initDB();
 	
-	$query ="SELECT `id` FROM users WHERE 1;";
+	$query ="SELECT `id` FROM users WHERE isActive=1;";
 	$stmt = $db->prepare($query);
 	$stmt->execute();
 	$result = $stmt->get_result();	
@@ -154,7 +154,7 @@ function validateLogin($log_id, $password){
 
 	$pwHash = md5($password);
 
-	$query = "SELECT `password` FROM users WHERE `email` = ? OR `username` = ?;";
+	$query = "SELECT `password` FROM users WHERE (`email` = ? OR `username` = ?) AND isActive=1;";
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("ss", $log_id, $log_id);	
 	$stmt->execute();
@@ -320,7 +320,7 @@ function deleteFriend($friendId){
 
 function getUsersBySearch($term){
 	$db = initDB();
-	$query ="SELECT `id` FROM `users` WHERE `first_name`LIKE ? OR `last_name` LIKE ? OR `username` LIKE ? OR `email` LIKE ?;";
+	$query ="SELECT `id` FROM `users` WHERE (`first_name`LIKE ? OR `last_name` LIKE ? OR `username` LIKE ? OR `email` LIKE ?) AND isActive=1;";
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("ssss", $term, $term, $term, $term);
 	$stmt->execute();
@@ -343,7 +343,7 @@ function getUsersBySearch($term){
 function getFriendsBySearch($term){
 	$db = initDB();
 	$ids = getFriendIds();
-	$query ="SELECT `id` FROM `users` WHERE (`first_name`LIKE ? OR `last_name` LIKE ? OR `username` LIKE ? OR `email` LIKE ?) AND (FALSE ";
+	$query ="SELECT `id` FROM `users` WHERE (`first_name`LIKE ? OR `last_name` LIKE ? OR `username` LIKE ? OR `email` LIKE ?) AND isActive=1 AND (FALSE ";
 
   	foreach ($ids as $id) {
   		$query .= " OR id=" . $id;
@@ -388,7 +388,7 @@ function sendConfirmationEmail($id) {
 	fclose($filehandler);
 		
 	// replaces the variables in the template
-	$body = str_replace("%%USER_NAME%%", $name, $body);
+	$body = str_replace("%%USER_NAME%%", $user['username'], $body);
 	$body = str_replace("%%LINK%%", $link, $body);
 		
 	mail($to, $subject, $body, $headers);
