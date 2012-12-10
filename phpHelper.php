@@ -20,6 +20,26 @@ function getUserIdFromEmail($email){
 		
 }
 
+function getUserIdFromUserName($uname){
+	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
+	$db = initDB();
+	
+	$query ="SELECT `id` FROM users WHERE `username` = ?;";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("s", $uname);
+	$stmt->execute();
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	if($num_results == 0){
+		return false;	
+	}else {
+		$row = $result->fetch_assoc();
+		$user_id = $row['id'];
+		return $user_id;	
+	}
+		
+}
+
 function getUserInfo($userId){
 	$db = initDB();
 	
@@ -127,15 +147,15 @@ function updateUserPassword($passHash) {
 
 }
 
-function validateLogin($email, $password){
+function validateLogin($log_id, $password){
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
 
 	$pwHash = md5($password);
 
-	$query = "SELECT `password` FROM users WHERE `email` = ?;";
+	$query = "SELECT `password` FROM users WHERE `email` = ? OR `username` = ?;";
 	$stmt = $db->prepare($query);
-	$stmt->bind_param("s", $email);	
+	$stmt->bind_param("ss", $log_id, $log_id);	
 	$stmt->execute();
 	$result = $stmt->get_result();
 

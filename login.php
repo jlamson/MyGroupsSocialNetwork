@@ -13,13 +13,16 @@
 
 	$error = "";
 
-	if(isset($_POST['loginEmail']) and isset($_POST['loginPassword'])) {
+	if(isset($_POST['loginId']) and isset($_POST['loginId'])) {
 		$db = initDB();
-		$email = $_POST['loginEmail'];
+		$log_id = $_POST['loginId'];
 		$password = $_POST['loginPassword'];
-		if (validateLogin($email, $password)) {
+		if (validateLogin($log_id, $password)) {
 			
-			$user_id = getUserIdFromEmail($email);
+			$user_id = getUserIdFromEmail($log_id);
+			if($user_id == false){
+				$user_id = getUserIdFromUserName($log_id);	
+			}
 			if($user_id != false){
 				$_SESSION['userId'] = $user_id;	
 				header('Location: home.php');
