@@ -19,6 +19,26 @@ function getUserIdFromEmail($email){
 	}		
 }
 
+function getUserIdFromUserName($uname){
+	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
+	$db = initDB();
+	
+	$query ="SELECT `id` FROM users WHERE `username` = ?;";
+	$stmt = $db->prepare($query);
+	$stmt->bind_param("s", $uname);
+	$stmt->execute();
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	if($num_results == 0){
+		return false;	
+	}else {
+		$row = $result->fetch_assoc();
+		$user_id = $row['id'];
+		return $user_id;	
+	}
+		
+}
+
 function getUserInfo($userId){
 	$db = initDB();
 	
@@ -128,15 +148,15 @@ function updateUserPassword($passHash) {
 	}
 }
 
-function validateLogin($email, $password){
+function validateLogin($log_id, $password){
 	$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 	$db = initDB();
 
 	$pwHash = md5($password);
 
-	$query = "SELECT `password` FROM users WHERE `email` = ?;";
+	$query = "SELECT `password` FROM users WHERE `email` = ? OR `username` = ?;";
 	$stmt = $db->prepare($query);
-	$stmt->bind_param("s", $email);	
+	$stmt->bind_param("ss", $log_id, $log_id);	
 	$stmt->execute();
 	$result = $stmt->get_result();
 
@@ -191,8 +211,10 @@ function getFriendsStatuses($ids) {
 	$query = "SELECT users.username, users.first_name, users.last_name, user_statuses.id, user_statuses.user_id, user_statuses.status 
 		FROM user_statuses INNER JOIN users ON users.id=user_statuses.user_id
   		WHERE (FALSE OR user_statuses.user_id=".$_SESSION['userId'];
-  	foreach ($ids as $id) {
-  		$query .= " OR user_statuses.user_id=" . $id;
+  	if($ids != false){
+	  	foreach ($ids as $id) {
+	  		$query .= " OR user_statuses.user_id=" . $id;
+	  	}
   	}
   	$query .= ") ORDER BY user_statuses.id DESC LIMIT 0, 20;";
 	$stmt = $db->prepare($query);
@@ -211,6 +233,36 @@ function getFriendsStatuses($ids) {
 	} else {
 		return false;
 	}
+}
+
+function getUserStatuses($id) {
+
+	$db = initDB();
+
+	$query = "SELECT users.username, users.first_name, users.last_name, user_statuses.id, user_statuses.user_id, user_statuses.status 
+		FROM user_statuses INNER JOIN users ON users.id=user_statuses.user_id
+  		WHERE (FALSE OR user_statuses.user_id=".$id;
+  	// foreach ($ids as $id) {
+  	// 	$query .= " OR user_statuses.user_id=" . $id;
+  	// }
+  	$query .= ") ORDER BY user_statuses.id DESC LIMIT 0, 5;";
+	$stmt = $db->prepare($query);
+	$stmt->execute();
+	
+	$result = $stmt->get_result();	
+	$num_results = $result->num_rows;
+	$statuses = array();
+
+	if($num_results != 0){
+		for($i=0; $i<$num_results; $i++){
+			$statuses[$i] = $result->fetch_assoc();
+			$statuses[$i]['comments'] = getComments($statuses[$i]['id']);
+		}
+		return $statuses;
+	} else {
+		return false;
+	}
+
 }
 
 function addComment($post_id, $comment) {
