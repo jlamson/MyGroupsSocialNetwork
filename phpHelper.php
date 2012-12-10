@@ -105,9 +105,12 @@ function updateLoggedInUser($user) {
 	$stmt->bind_param("ssssiiii", $user['fname'], $user['lname'], $user['about'], 
 		$user['gender'], $user['month'], $user['day'], $user['year'],
 		$_SESSION['userId']);
-	$stmt->execute();
 	
-	return $db->affected_rows;
+	if(!($stmt->execute())) {
+		return 0;
+	} else {
+		return 1;
+	}
 
 }
 
@@ -121,10 +124,12 @@ function updateUserPassword($passHash) {
 	
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("ss",	$passHash, $_SESSION['userId']);
-	$stmt->execute();
 	
-	return $db->affected_rows;
-
+	if(!($stmt->execute())) {
+		return 0;
+	} else {
+		return 1;
+	}
 }
 
 function validateLogin($email, $password){

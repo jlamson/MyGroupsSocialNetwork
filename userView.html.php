@@ -8,7 +8,10 @@
 	<span class="userView_content">
 		<?= $user['first_name'] ?> <?= $user['last_name'] ?> <br />
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<?= $user['gender'] ?>, <?php echo $user["month"]."/".$user["day"]."/".$user["year"] ?><br />
+		<?php if ($user['gender']!='b') echo strtoupper($user['gender']) . ","; ?> 
+		<?php if ($user['month'] != 0 and $user['day'] != 0 ) { 
+			echo $user["month"]."/".$user["day"]; 
+		} if ($user['year'] != 0) echo "/".$user["year"]; ?><br />
 	</span>
 </p>
 <form action="" method="post">
