@@ -1,0 +1,14 @@
+<h1>Mon Amis Welcomes You!</h1>
+
+<p>Hello %%USER_NAME%%, </p>
+
+<p>We're glad that you want to use our social network. And you're almost done!
+The last step to having an account is clicking the link below to activate your
+account. After that, you can go to "Mon Profile" to enter more information about
+yourself, "Members" to search through other people using Mon Amis, and "Chez Moi"
+to post and comment on statues. Enjoy!</p>
+
+<p><a href="%%CONFIRM_LINK"%%>%%CONFIRM_LINK%%</a></p>
+
+<p>Avec En Ami,<br />
+The Mon Amis team</p>
