@@ -1,4 +1,4 @@
-<h1><?= $user["username"] ?></h1>
+<h1><a href="viewprofile.php?id=<?=$user['id']?>"><?= $user["username"] ?></a></h1>
 <p class="userView_block">
 	<span class="userView_title">About Me</span>
 	<span class="userView_content"><?= $user["about"] ?></span>

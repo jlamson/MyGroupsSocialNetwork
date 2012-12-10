@@ -6,8 +6,7 @@
 	$include = "viewProfile.html.php";
 
 	//TODO: 
-	// $cur_profile = $_GET['id'];
-	$cur_profile = 1;
+	$cur_profile = $_GET['id'];
 	
 
 	if (isset($_REQUEST['comment'])) {
