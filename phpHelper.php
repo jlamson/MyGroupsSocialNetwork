@@ -16,8 +16,7 @@ function getUserIdFromEmail($email){
 		$row = $result->fetch_assoc();
 		$user_id = $row['id'];
 		return $user_id;	
-	}
-		
+	}		
 }
 
 function getUserInfo($userId){
@@ -56,7 +55,6 @@ function getAllUsers(){
 	} else {
 		return false;
 	}
-		
 }
 
 function isUniqueUser($un, $email) {
@@ -84,7 +82,6 @@ function isUniqueUser($un, $email) {
 	}
 
 	return $error;
-
 }
 
 function updateLoggedInUser($user) {
@@ -111,7 +108,6 @@ function updateLoggedInUser($user) {
 	} else {
 		return 1;
 	}
-
 }
 
 function updateUserPassword($passHash) {
@@ -152,7 +148,6 @@ function validateLogin($email, $password){
 		$correct_password = $row['password'];
 		return $correct_password == $pwHash;
 	}
-
 }
 
 function initDB() {
@@ -165,7 +160,6 @@ function initDB() {
 		return $db;
 	}
 }
-
 
 function getFriendIds(){
 	$db = initDB();
@@ -186,8 +180,7 @@ function getFriendIds(){
 		return $ids;
 	} else {
 		return false;
-	}
-		
+	}		
 }
 
 function getFriendsStatuses($ids) {
@@ -218,7 +211,6 @@ function getFriendsStatuses($ids) {
 	} else {
 		return false;
 	}
-
 }
 
 function addComment($post_id, $comment) {
@@ -256,7 +248,6 @@ function getComments($status_id) {
 	} else {
 		return false;
 	}
-	
 }
 
 function addFriend($friendId){
@@ -265,7 +256,6 @@ function addFriend($friendId){
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("ii", $_SESSION['userId'], $friendId);
 	return($stmt->execute());
-
 }
 
 function deleteFriend($friendId){
@@ -274,7 +264,6 @@ function deleteFriend($friendId){
 	$stmt = $db->prepare($query);
 	$stmt->bind_param("ii", $_SESSION['userId'], $friendId);
 	return($stmt->execute());
-
 }
 
 function getUsersBySearch($term){
@@ -297,7 +286,6 @@ function getUsersBySearch($term){
 	} else {
 		return false;
 	}
-
 }
 
 function getFriendsBySearch($term){
@@ -327,7 +315,31 @@ function getFriendsBySearch($term){
 	} else {
 		return false;
 	}
+}
 
+function sendConfirmationEmail($id) {
+	$user = getUserInfo($id);
+	
+	$to = $user['email'];
+	$from = "staff@mon_ami.com";
+	$subject = "User Confirmation";
+	
+	$headers = "MIME-Version: 1.0\r\n"; 
+	$headers .= "Content-type: text/html; charset=iso-8859-1\r\n"; 
+	$headers .= "From: ".$from."\r\n"; 
+	
+	$link = "http://localhost/mon_amis/confirmNewUser.php" . '?' 
+		. 'id=' . $user['id'] . "&confirmUser=1"; 
+	
+	$filehandler = fopen("newUserEmailTemplate.txt", 'r') or die($php_errormsg);
+	$body = fread($filehandler, filesize("newUserEmailTemplate.txt"));
+	fclose($filehandler);
+		
+	// replaces the variables in the template
+	$body = str_replace("%%USER_NAME%%", $name, $body);
+	$body = str_replace("%%LINK%%", $link, $body);
+		
+	mail($to, $subject, $body, $headers);
 }
 
 ?>
